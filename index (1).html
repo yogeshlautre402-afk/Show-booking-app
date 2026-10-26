@@ -360,6 +360,17 @@ function logout(){
 }
 function start(){if(CLOUD)return cloudStart();localStart()}
 start();
+function sharePavati(canvas, text) {
+  const dataUrl = canvas.toDataURL('image/png');
+  if (window.AndroidShare && AndroidShare.shareImage) {
+    AndroidShare.shareImage(dataUrl, text);
+  } else if (navigator.share) {
+    canvas.toBlob(b => {
+      const f = new File([b], 'pavati.png', { type: 'image/png' });
+      navigator.share({ files: [f], text: text });
+    });
+  }
+}
 </script>
 </body>
 </html>
